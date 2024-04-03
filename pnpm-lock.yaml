@@ -10,6 +10,9 @@ importers:
 
   apps/www:
     dependencies:
+      '@clerk/localizations':
+        specifier: ^1.27.0
+        version: 1.27.0(react@18.2.0)
       '@clerk/nextjs':
         specifier: ^4.29.10
         version: 4.29.10(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
@@ -114,6 +117,16 @@ packages:
       tslib: 2.4.1
     transitivePeerDependencies:
       - react
+    dev: false
+
+  /@clerk/localizations@1.27.0(react@18.2.0):
+    resolution: {integrity: sha512-ePuxP4jlAVgXeZNukq8LfU0RC6umihus0loHJhXTWLQJ6DSzSzmfyTEl9gGuvvAuDcs7DypnnsP/hXyT42I0Ow==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@clerk/types': 3.63.0
+      react: 18.2.0
     dev: false
 
   /@clerk/nextjs@4.29.10(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
