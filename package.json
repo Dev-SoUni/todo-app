@@ -1,0 +1,8 @@
+{
+  "name": "todo-app",
+  "version": "0.0.1",
+  "scripts": {
+    "www": "pnpm --filter www"
+  },
+  "license": "ISC"
+}
