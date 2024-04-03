@@ -1,6 +1,11 @@
 import { authMiddleware } from "@clerk/nextjs";
 
-export default authMiddleware({});
+export default authMiddleware({
+  // 권한 인증 없이 접근 가능한 페이지 경로
+  publicRoutes: [
+    '/',
+  ],
+});
 
 export const config = {
   matcher: ["/((?!.+.[w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
