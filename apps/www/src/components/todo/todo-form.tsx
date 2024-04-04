@@ -14,19 +14,27 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface TodoFormProps {
+  defaultTitle?: string
+  defaultDescription?: string
+  defaultDate?: Date
+  submitButtonText?: string
   className?: string
   onSubmit?: (values: { title: string; description: string; date: Date }) => void
   onCancel?: () => void
 }
 
 export function TodoForm({
-                           className,
-                           onSubmit,
-                           onCancel,
-                         }: TodoFormProps) {
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [date, setDate] = useState<Date>();
+  defaultTitle,
+  defaultDescription,
+  defaultDate,
+  submitButtonText = "확인",
+  className,
+  onSubmit,
+  onCancel,
+}: TodoFormProps) {
+  const [title, setTitle] = useState<string>(defaultTitle || '');
+  const [description, setDescription] = useState<string>(defaultDescription || '');
+  const [date, setDate] = useState<Date | undefined>(defaultDate || undefined);
 
   const formattedDate = useMemo(() => {
     if (!date) return "날짜 없음";
@@ -91,7 +99,7 @@ export function TodoForm({
             취소
           </Button>
           <Button variant='default' onClick={handleSubmit}>
-            등록
+            {submitButtonText}
           </Button>
         </div>
       </div>

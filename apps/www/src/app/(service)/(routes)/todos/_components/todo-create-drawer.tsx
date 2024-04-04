@@ -57,6 +57,7 @@ export const TodoCreateDrawer = () => {
         </DrawerHeader>
 
         <TodoForm
+          submitButtonText="등록"
           className="mt-4"
           onSubmit={handleSubmit}
           onCancel={handleClose}
