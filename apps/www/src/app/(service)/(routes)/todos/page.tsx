@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 
-export default function TodosPage() {
+import { TodoList } from "./_components/todo-list";
+
+export default async function TodosPage() {
   return (
-    <div></div>
+    <TodoList />
   );
 }
