@@ -72,7 +72,7 @@ export function TodoForm({
         />
       </div>
       <div className='p-2 flex justify-between'>
-        <Popover>
+        <Popover modal={true}>
           <PopoverTrigger asChild>
             <Button
               variant={"outline"}
@@ -85,7 +85,11 @@ export function TodoForm({
               <span>{formattedDate}</span>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
+          <PopoverContent
+            side="top"
+            align="start"
+            className="w-auto p-0"
+          >
             <Calendar
               mode="single"
               selected={date}
