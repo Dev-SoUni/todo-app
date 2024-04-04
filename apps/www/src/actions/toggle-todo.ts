@@ -9,7 +9,7 @@ import type { Todo } from "@/ts/schema.t";
 /**
  * 할일 완료 여부 토글
  */
-export const toggleTodo = async (todoId: string) => {
+export const toggleTodo = async (todoId: number) => {
   const { userId } = auth();
   if (!userId) {
     console.error("[toggleTodo]: 로그인한 사용자를 찾을 수 없습니다.");

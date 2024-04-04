@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs";
 
 import { pool } from "@/lib/db";
 
-export const deleteTodo = async (todoId: string) => {
+export const deleteTodo = async (todoId: number) => {
   const { userId } = auth();
   if (!userId) {
     console.error("[createTodo]: 로그인한 사용자를 찾을 수 없습니다.");
