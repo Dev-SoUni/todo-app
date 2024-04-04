@@ -31,9 +31,9 @@ export const toggleTodo = async (todoId: string) => {
   try {
     conn = await pool.getConnection();
     await conn.query(`
-        UPDATE todo
-        SET is_done = ${!Boolean(todo.is_done)}
-        WHERE id = ${todo.id}
+      UPDATE todo
+      SET is_done = ${!Boolean(todo.is_done)}
+      WHERE id = ${todo.id}
     `);
 
     return {
@@ -49,6 +49,6 @@ export const toggleTodo = async (todoId: string) => {
     return { error: "해당 요청을 처리하는 중 문제가 발생했습니다." };
   }
   finally {
-    if (conn) conn.release();
+    if (conn) await conn.release();
   }
 }
