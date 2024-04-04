@@ -11,13 +11,19 @@ import type { Todo } from "@/ts/schema.t";
 type State = {
   todos: Todo[]
   isCreateDrawerOpen: boolean
+  isEditDrawerOpen: boolean
+  selectedEditTodo: Todo | null
 }
 
 type Action =
   | { type: 'TOGGLE_TODO', payload: string }
   | { type: 'OPEN_CREATE_DRAWER' }
   | { type: 'CLOSE_CREATE_DRAWER' }
+  | { type: 'OPEN_EDIT_DRAWER', payload: Todo }
+  | { type: 'CLOSE_EDIT_DRAWER' }
   | { type: 'CREATE_TODO', payload: Todo }
+  | { type: 'EDIT_TODO', payload: Todo }
+  | { type: 'DELETE_TODO', payload: string }
 
 type Dispatch = React.Dispatch<Action>
 
@@ -43,10 +49,35 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         isCreateDrawerOpen: false,
       }
+    case "OPEN_EDIT_DRAWER":
+      return {
+        ...state,
+        isEditDrawerOpen: true,
+        selectedEditTodo: action.payload,
+      }
+    case "CLOSE_EDIT_DRAWER":
+      return {
+        ...state,
+        isEditDrawerOpen: false,
+        selectedEditTodo: null,
+      }
     case "CREATE_TODO":
       return {
         ...state,
         todos: state.todos.concat(action.payload),
+      }
+    case "EDIT_TODO":
+      return {
+        ...state,
+        todos: state.todos.map((_todo) => _todo.id === action.payload.id
+          ? action.payload
+          : _todo
+        )
+      }
+    case "DELETE_TODO":
+      return {
+        ...state,
+        todos: state.todos.filter((_todo) => _todo.id !== action.payload),
       }
     default:
       return state;
@@ -69,15 +100,17 @@ export const useServiceDispatch = () => {
 }
 
 export const ServiceProvider = ({
-                                  preloadedState,
-                                  children,
-                                }: {
+  preloadedState,
+  children,
+}: {
   preloadedState: PreloadedState
   children: React.ReactNode
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     todos: preloadedState.todos,
     isCreateDrawerOpen: false,
+    isEditDrawerOpen: false,
+    selectedEditTodo: null,
   });
 
   return (

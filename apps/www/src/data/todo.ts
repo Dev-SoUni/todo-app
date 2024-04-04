@@ -4,14 +4,14 @@ import type { Todo } from "@/ts/schema.t";
 /**
  * 해당 'userId'에 해당하는 할 일 전체 데이터 조회
  */
-export const getTodosByUserId = async (userId: string): Promise<Todo[]> => {
+export const getTodosByUserId = async (userId: number): Promise<Todo[]> => {
   let conn;
   try {
     conn = await pool.getConnection();
     const rows = await conn.query(`
-        SELECT *
-        FROM todo
-        WHERE user_id = '${userId}'
+      SELECT *
+      FROM todo
+      WHERE user_id = '${userId}'
     `);
 
     return rows;
@@ -24,7 +24,7 @@ export const getTodosByUserId = async (userId: string): Promise<Todo[]> => {
 /**
  * 해당 'id'에 해당하는 할 일 데이터 조회
  */
-export const getTodoById = async (id: string): Promise<Todo | null> => {
+export const getTodoById = async (id: number): Promise<Todo | null> => {
   let conn;
   try {
     conn = await pool.getConnection();
