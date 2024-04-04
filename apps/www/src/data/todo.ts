@@ -4,7 +4,7 @@ import type { Todo } from "@/ts/schema.t";
 /**
  * 해당 'userId'에 해당하는 할 일 전체 데이터 조회
  */
-export const getTodosByUserId = async (userId: number): Promise<Todo[]> => {
+export const getTodosByUserId = async (userId: string): Promise<Todo[]> => {
   let conn;
   try {
     conn = await pool.getConnection();
