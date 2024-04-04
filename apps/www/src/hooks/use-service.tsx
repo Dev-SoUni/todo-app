@@ -8,9 +8,19 @@ import React, {
 
 import type { Todo } from "@/ts/schema.t";
 
-type State = { todos: Todo[] }
-type Action = { type: 'TOGGLE_TODO', payload: string }
+type State = {
+  todos: Todo[]
+  isCreateDrawerOpen: boolean
+}
+
+type Action =
+  | { type: 'TOGGLE_TODO', payload: string }
+  | { type: 'OPEN_CREATE_DRAWER' }
+  | { type: 'CLOSE_CREATE_DRAWER' }
+  | { type: 'CREATE_TODO', payload: Todo }
+
 type Dispatch = React.Dispatch<Action>
+
 type PreloadedState = Pick<State, 'todos'>
 
 const reducer = (state: State, action: Action): State => {
@@ -22,7 +32,22 @@ const reducer = (state: State, action: Action): State => {
           ? { ..._todo, is_done: _todo.is_done === 0 ? 1 : 0 }
           : _todo
         )
-      };
+      }
+    case "OPEN_CREATE_DRAWER":
+      return {
+        ...state,
+        isCreateDrawerOpen: true,
+      }
+    case "CLOSE_CREATE_DRAWER":
+      return {
+        ...state,
+        isCreateDrawerOpen: false,
+      }
+    case "CREATE_TODO":
+      return {
+        ...state,
+        todos: state.todos.concat(action.payload),
+      }
     default:
       return state;
   }
@@ -50,7 +75,10 @@ export const ServiceProvider = ({
   preloadedState: PreloadedState
   children: React.ReactNode
 }) => {
-  const [state, dispatch] = useReducer(reducer, { todos: preloadedState.todos });
+  const [state, dispatch] = useReducer(reducer, {
+    todos: preloadedState.todos,
+    isCreateDrawerOpen: false,
+  });
 
   return (
     <ServiceStateContext.Provider value={state}>

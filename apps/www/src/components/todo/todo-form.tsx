@@ -13,15 +13,17 @@ import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function TodoForm({
-  className,
-  onSubmit,
-  onCancel,
-}: {
+export interface TodoFormProps {
   className?: string
-  onSubmit?: (values: { title: string; description: string; date: Date | undefined }) => void
+  onSubmit?: (values: { title: string; description: string; date: Date }) => void
   onCancel?: () => void
-}) {
+}
+
+export function TodoForm({
+                           className,
+                           onSubmit,
+                           onCancel,
+                         }: TodoFormProps) {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<Date>();
@@ -34,6 +36,11 @@ export function TodoForm({
 
   const handleSubmit = () => {
     if (!onSubmit) return;
+
+    if (!date) {
+      alert("날짜는 필수 선택 사항입니다.");
+      return;
+    }
 
     onSubmit({ title, description, date });
   }
