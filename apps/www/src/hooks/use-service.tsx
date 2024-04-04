@@ -16,14 +16,14 @@ type State = {
 }
 
 type Action =
-  | { type: 'TOGGLE_TODO', payload: string }
+  | { type: 'TOGGLE_TODO', payload: number }
   | { type: 'OPEN_CREATE_DRAWER' }
   | { type: 'CLOSE_CREATE_DRAWER' }
   | { type: 'OPEN_EDIT_DRAWER', payload: Todo }
   | { type: 'CLOSE_EDIT_DRAWER' }
   | { type: 'CREATE_TODO', payload: Todo }
   | { type: 'EDIT_TODO', payload: Todo }
-  | { type: 'DELETE_TODO', payload: string }
+  | { type: 'DELETE_TODO', payload: number }
 
 type Dispatch = React.Dispatch<Action>
 
