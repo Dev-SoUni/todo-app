@@ -1,10 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@clerk/nextjs";
 import { ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {redirect} from "next/navigation";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const { userId } = auth();
+
+  // 로그인 되어 있다면 서비스 페이지로 이동
+  if (userId) {
+    return redirect("/todos");
+  }
+
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
