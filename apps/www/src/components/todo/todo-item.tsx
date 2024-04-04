@@ -25,7 +25,7 @@ export function TodoItem({
   onEdit,
   onDelete,
  }: {
-  id: string
+  id: number
   title: string
   description: string
   date: Date
@@ -64,7 +64,7 @@ export function TodoItem({
 
       <div className="pt-0.5">
         <Checkbox
-          id={id}
+          id={String(id)}
           checked={checked}
           className="rounded-full border border-gray-300 w-5 h-5"
           onCheckedChange={onCheckedChange}
@@ -72,7 +72,7 @@ export function TodoItem({
       </div>
       <div className="flex flex-col gap-0.5">
         <label
-          htmlFor={id}
+          htmlFor={String(id)}
           className={cn(
             "font-medium",
             checked && "text-black/50 line-through",
