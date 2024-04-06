@@ -1,30 +1,37 @@
-"use client"
+"use client";
 
-import React from "react"
+import React from "react";
+import { ListFilter } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { useServiceState, useServiceDispatch } from "@/hooks/use-service";
 
-import { ListFilter } from "lucide-react";
+const filters = [
+  { label: "전체", value: "all" },
+  { label: "할 일", value: "0" },
+  { label: "완료", value: "1" },
+]
 
 export function TodoFilter() {
   const { filter } = useServiceState();
   const dispatch = useServiceDispatch();
 
   const handleValueChange = (value: string) => {
-    dispatch({ type: "SET_FILTER", payload: value as "0" | "1" | "all"});
+    dispatch({
+      type: "SET_FILTER",
+      payload: value as "0" | "1" | "all",
+    });
   }
 
-
   return (
-    <div className='flex justify-end'>
+    <div className="flex justify-end">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="focus:outline-none">
@@ -37,12 +44,19 @@ export function TodoFilter() {
             value={filter}
             onValueChange={handleValueChange}
           >
-            <DropdownMenuRadioItem value="all">전체</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="1">완료</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="0">미완료</DropdownMenuRadioItem>
+            {
+              filters.map((filter) => (
+                <DropdownMenuRadioItem
+                  key={filter.value}
+                  value={filter.value}
+                >
+                  {filter.label}
+                </DropdownMenuRadioItem>
+              ))
+            }
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
+  );
 }

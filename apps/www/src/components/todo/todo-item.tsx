@@ -99,5 +99,5 @@ export function TodoItem({
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -12,7 +12,7 @@ export const TodoList = () => {
   const dispatch = useServiceDispatch();
 
   const filteredTodos = useMemo(() => {
-    switch (filter){
+    switch (filter) {
       case "all":
         return todos
       case "1":
@@ -71,5 +71,5 @@ export const TodoList = () => {
         ))
       }
     </div>
-  )
+  );
 }
