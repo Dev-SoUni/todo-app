@@ -10,6 +10,7 @@ import type { Todo } from "@/ts/schema.t";
 
 type State = {
   todos: Todo[]
+  filter: "0" | "1" | "all"
   isCreateDrawerOpen: boolean
   isEditDrawerOpen: boolean
   selectedEditTodo: Todo | null
@@ -24,6 +25,7 @@ type Action =
   | { type: 'CREATE_TODO', payload: Todo }
   | { type: 'EDIT_TODO', payload: Todo }
   | { type: 'DELETE_TODO', payload: number }
+  | { type: 'SET_FILTER', payload: "0" | "1" | "all"  }
 
 type Dispatch = React.Dispatch<Action>
 
@@ -31,14 +33,6 @@ type PreloadedState = Pick<State, 'todos'>
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "TOGGLE_TODO":
-      return {
-        ...state,
-        todos: state.todos.map((_todo) => _todo.id === action.payload
-          ? { ..._todo, is_done: _todo.is_done === 0 ? 1 : 0 }
-          : _todo
-        )
-      }
     case "OPEN_CREATE_DRAWER":
       return {
         ...state,
@@ -79,6 +73,11 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         todos: state.todos.filter((_todo) => _todo.id !== action.payload),
       }
+    case "SET_FILTER":
+      return {
+        ...state,
+        filter: action.payload,
+      }
     default:
       return state;
   }
@@ -108,6 +107,7 @@ export const ServiceProvider = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     todos: preloadedState.todos,
+    filter: "all",
     isCreateDrawerOpen: false,
     isEditDrawerOpen: false,
     selectedEditTodo: null,
