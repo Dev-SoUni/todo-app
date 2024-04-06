@@ -39,7 +39,7 @@ export function TodoItem({
   const formattedDate = useMemo(() => format(date, "yyyy-MM-dd"), [date]);
 
   return (
-    <div className={cn("relative px-4 py-4 flex gap-4", className)}>
+    <div className={cn("relative m-4 px-4 py-4 flex gap-4 border-b border-gray-200", className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

@@ -1,18 +1,33 @@
 "use client";
 
+import { useMemo } from "react";
+
 import { TodoItem } from "@/components/todo/todo-item";
 import { useServiceState, useServiceDispatch } from "@/hooks/use-service";
 import { toggleTodo } from "@/actions/toggle-todo";
 import { deleteTodo } from "@/actions/delete-todo";
 
 export const TodoList = () => {
-  const { todos } = useServiceState();
+  const { todos, filter } = useServiceState();
   const dispatch = useServiceDispatch();
+
+  const filteredTodos = useMemo(() => {
+    switch (filter){
+      case "all":
+        return todos
+      case "1":
+        return todos.filter((todo) => todo.is_done)
+      case "0":
+        return todos.filter((todo) => !todo.is_done)
+      default:
+        return todos
+    }
+  }, [todos, filter])
 
   return (
     <div>
       {
-        todos.map((todo) => (
+        filteredTodos.map((todo) => (
           <TodoItem
             key={todo.id}
             id={todo.id}
