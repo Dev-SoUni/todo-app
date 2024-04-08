@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import { format } from "date-fns";
 import { CircleX } from "lucide-react";
 
@@ -15,6 +16,7 @@ import { useServiceDispatch, useServiceState } from "@/hooks/use-service";
 import { editTodo } from "@/actions/edit-todo";
 
 export const TodoEditDrawer = () => {
+  const [isPending, startTransition] = useTransition();
   const { isEditDrawerOpen, selectedEditTodo } = useServiceState();
   const dispatch = useServiceDispatch();
 
@@ -27,23 +29,25 @@ export const TodoEditDrawer = () => {
 
     const formattedDate = format(values.date, "yyyy-MM-dd");
 
-    editTodo({
-      todoId: selectedEditTodo.id,
-      ...values,
-      date: formattedDate,
+    startTransition( async () => {
+      editTodo({
+        todoId: selectedEditTodo.id,
+        ...values,
+        date: formattedDate,
+      })
+        .then((response) => {
+          if (response.error) {
+            alert(response.error);
+          }
+          if (response.success) {
+            dispatch({ type: "EDIT_TODO", payload: response.data });
+            dispatch({ type: "CLOSE_EDIT_DRAWER" });
+          }
+        })
+        .catch(() => {
+          alert("해당 요청을 처리하는 중 문제가 발생했습니다.");
+        })
     })
-      .then((response) => {
-        if (response.error) {
-          alert(response.error);
-        }
-        if (response.success) {
-          dispatch({ type: "EDIT_TODO", payload: response.data });
-          dispatch({ type: "CLOSE_EDIT_DRAWER" });
-        }
-      })
-      .catch(() => {
-        alert("해당 요청을 처리하는 중 문제가 발생했습니다.");
-      })
   }
 
   const handleClose = () => {
@@ -70,6 +74,7 @@ export const TodoEditDrawer = () => {
               className="mt-4"
               onSubmit={handleSubmit}
               onCancel={handleClose}
+              isPending={isPending}
             />
           )
         }

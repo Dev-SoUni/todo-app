@@ -7,7 +7,7 @@ import { useServiceState, useServiceDispatch } from "@/hooks/use-service";
 import { toggleTodo } from "@/actions/toggle-todo";
 import { deleteTodo } from "@/actions/delete-todo";
 
-export const TodoList = () => {
+export  const TodoList = async () => {
   const { todos, filter } = useServiceState();
   const dispatch = useServiceDispatch();
 
