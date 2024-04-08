@@ -15,7 +15,7 @@ import { useServiceState, useServiceDispatch } from "@/hooks/use-service";
 
 const filters = [
   { label: "전체", value: "all" },
-  { label: "할 일", value: "0" },
+  { label: "할일", value: "0" },
   { label: "완료", value: "1" },
 ]
 

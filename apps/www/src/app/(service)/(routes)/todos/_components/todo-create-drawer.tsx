@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import { format } from "date-fns";
 
 import {
@@ -14,6 +15,7 @@ import { useServiceDispatch, useServiceState } from "@/hooks/use-service";
 import { createTodo } from "@/actions/create-todo";
 
 export const TodoCreateDrawer = () => {
+  const [isPending, startTransition] = useTransition();
   const { isCreateDrawerOpen } = useServiceState();
   const dispatch = useServiceDispatch();
 
@@ -24,22 +26,24 @@ export const TodoCreateDrawer = () => {
   const handleSubmit: TodoFormProps['onSubmit'] = (values) => {
     const formattedDate = format(values.date, "yyyy-MM-dd");
 
-    createTodo({
-      ...values,
-      date: formattedDate,
-    })
-      .then((response) => {
-        if (response.error) {
-          alert(response.error);
-        }
-        if (response.success) {
-          dispatch({ type: "CREATE_TODO", payload: response.data });
-          dispatch({ type: "CLOSE_CREATE_DRAWER" });
-        }
+    startTransition(async () => {
+      createTodo({
+        ...values,
+        date: formattedDate,
       })
-      .catch(() => {
-        alert("해당 요청을 처리하는 중 문제가 발생했습니다.");
-      });
+        .then((response) => {
+          if (response.error) {
+            alert(response.error);
+          }
+          if (response.success) {
+            dispatch({ type: "CREATE_TODO", payload: response.data });
+            dispatch({ type: "CLOSE_CREATE_DRAWER" });
+          }
+        })
+        .catch(() => {
+          alert("해당 요청을 처리하는 중 문제가 발생했습니다.");
+        });
+    })
   }
 
   const handleClose = () => {
@@ -61,6 +65,7 @@ export const TodoCreateDrawer = () => {
           className="mt-4"
           onSubmit={handleSubmit}
           onCancel={handleClose}
+          isPending={isPending}
         />
       </DrawerContent>
     </Drawer>
