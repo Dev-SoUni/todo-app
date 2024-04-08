@@ -10,11 +10,11 @@ import { TodoListSkeleton } from "./todo-list-skeleton";
 export function TodoContainer() {
   return (
     <Tabs defaultValue="todo">
-      <TodoHeader/>
-      <TodoFilter/>
+      <TodoHeader />
+      <TodoFilter />
       <TabsContent value="todo">
-        <Suspense fallback={<TodoListSkeleton/>}>
-          <TodoList/>
+        <Suspense fallback={<TodoListSkeleton />}>
+          <TodoList />
         </Suspense>
       </TabsContent>
     </Tabs>
