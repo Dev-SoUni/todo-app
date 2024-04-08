@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useMemo, useState} from "react";
+import React, { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -21,6 +21,7 @@ export interface TodoFormProps {
   className?: string
   onSubmit?: (values: { title: string; description: string; date: Date }) => void
   onCancel?: () => void
+  isPending?: boolean
 }
 
 export function TodoForm({
@@ -31,6 +32,7 @@ export function TodoForm({
   className,
   onSubmit,
   onCancel,
+  isPending,
 }: TodoFormProps) {
   const [title, setTitle] = useState<string>(defaultTitle || '');
   const [description, setDescription] = useState<string>(defaultDescription || '');
@@ -102,7 +104,7 @@ export function TodoForm({
           <Button variant='outline' onClick={onCancel}>
             취소
           </Button>
-          <Button variant='default' onClick={handleSubmit}>
+          <Button variant='default' onClick={handleSubmit} disabled={isPending}>
             {submitButtonText}
           </Button>
         </div>
