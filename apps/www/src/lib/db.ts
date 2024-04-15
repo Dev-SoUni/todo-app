@@ -4,7 +4,11 @@
 
 import mariadb from "mariadb";
 
-const pool = mariadb.createPool({
+declare global {
+  var pool: mariadb.Pool | undefined
+}
+
+export const pool = globalThis.pool || mariadb.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -12,4 +16,6 @@ const pool = mariadb.createPool({
   connectionLimit: 5,
 })
 
-export { pool }
+if (process.env.NODE_ENV !== "production") {
+  globalThis.pool = pool
+}

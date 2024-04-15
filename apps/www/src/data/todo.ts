@@ -42,3 +42,30 @@ export const getTodoById = async (id: number): Promise<Todo | null> => {
     if (conn) conn.release();
   }
 }
+
+interface todoProps {
+  userId: string
+  date: string
+}
+
+/**
+ * 해당 'id', 'date'에 해당하는 할 일 데이터 조회
+ * @param props
+ */
+export const getTodosByDate = async (props: todoProps) => {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    const rows = await conn.query(`
+      SELECT *
+      FROM todo
+      WHERE user_id = '${props.userId}'
+      AND   date = '${props.date}'
+    `);
+
+    return rows;
+  }
+  finally {
+    if(conn) conn.release();
+  }
+}

@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  db:
+    container_name: mango-todo
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./volumes/conf.d:/etc/mysql/conf.d
+      - ./volumes/data:/var/lib/mysql
+      - ./volumes/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - backend
+    restart: always
+
+networks:
+  backend:
