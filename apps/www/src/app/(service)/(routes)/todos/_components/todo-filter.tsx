@@ -11,6 +11,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 import { useServiceState, useServiceDispatch } from "@/hooks/use-service";
 
 const filters = [
@@ -18,6 +19,12 @@ const filters = [
   { label: "할일", value: "0" },
   { label: "완료", value: "1" },
 ]
+
+const filterMap = {
+  "all": "전체",
+  "0": "할일",
+  "1": "완료",
+}
 
 export function TodoFilter() {
   const { filter } = useServiceState();
@@ -31,12 +38,24 @@ export function TodoFilter() {
   }
 
   return (
-    <div className="flex justify-end">
+    <div className="px-2 flex justify-end">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="focus:outline-none">
+          <Button
+            variant="outline"
+            className="focus:outline-none"
+          >
             <ListFilter className="w-4 h-4 mr-2"/>
             <span>필터</span>
+
+            <Separator
+              orientation="vertical"
+              className="mx-2.5"
+            />
+
+            <span className="px-2 py-1 text-xs font-normal rounded-md bg-gray-100">
+              {filterMap[filter]}
+            </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-20 mr-2">

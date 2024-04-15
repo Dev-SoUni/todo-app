@@ -1,0 +1,2 @@
+-- Examples
+-- LOAD DATA INFILE './csv/sample.csv' INTO TABLE sample FIELDS TERMINATED BY ',' (`sample`);

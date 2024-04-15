@@ -1,0 +1,4 @@
+# Volumes
+/volumes/data/*
+!/volumes/data/csv/
+!/volumes/data/.gitkeep

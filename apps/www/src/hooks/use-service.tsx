@@ -6,10 +6,11 @@ import React, {
   useReducer,
 } from "react";
 
-import type { Todo } from "@/ts/schema.t";
+import type { Todo, Weeks } from "@/ts/schema.t";
 
 type State = {
   todos: Todo[]
+  activateDate: Date
   filter: "0" | "1" | "all"
   isCreateDrawerOpen: boolean
   isEditDrawerOpen: boolean
@@ -18,6 +19,8 @@ type State = {
 
 type Action =
   | { type: 'TOGGLE_TODO', payload: number }
+  | { type: 'UPDATE_ACTIVATE_DATE', payload: Date }
+  | { type: 'SET_TODOS', payload: Todo[] }
   | { type: 'OPEN_CREATE_DRAWER' }
   | { type: 'CLOSE_CREATE_DRAWER' }
   | { type: 'OPEN_EDIT_DRAWER', payload: Todo }
@@ -33,6 +36,24 @@ type PreloadedState = Pick<State, 'todos'>
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "TOGGLE_TODO":
+      return {
+        ...state,
+        todos: state.todos.map((_todo) => _todo.id === action.payload
+          ? { ..._todo, is_done: _todo.is_done === 0 ? 1 : 0 }
+          : _todo
+        )
+      }
+    case "UPDATE_ACTIVATE_DATE":
+      return {
+        ...state,
+        activateDate: action.payload,
+      }
+    case "SET_TODOS":
+      return {
+        ...state,
+        todos: action.payload,
+      }
     case "OPEN_CREATE_DRAWER":
       return {
         ...state,
@@ -107,6 +128,7 @@ export const ServiceProvider = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     todos: preloadedState.todos,
+    activateDate: new Date(),
     filter: "all",
     isCreateDrawerOpen: false,
     isEditDrawerOpen: false,

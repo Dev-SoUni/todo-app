@@ -7,3 +7,8 @@ export interface Todo {
   is_done: 0 | 1
   created_at: Date
 }
+
+export interface Weeks {
+  date: Date
+  dayOfTheWeek: string
+}
