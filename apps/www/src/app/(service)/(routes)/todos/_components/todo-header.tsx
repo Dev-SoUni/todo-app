@@ -14,6 +14,8 @@ import {
 } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
+import { TodoFilter } from "./todo-filter"
+
 export function TodoHeader() {
   const { activateDate } = useServiceState();
   const dispatch = useServiceDispatch();
@@ -43,8 +45,8 @@ export function TodoHeader() {
   }
 
   return (
-    <div>
-      <div className="m-5">
+    <div className="px-5 pb-4 border-b border-slate-200">
+      <div className="py-5">
         <span className="text-slate-400 font-medium">
           {year}
         </span>
@@ -52,14 +54,14 @@ export function TodoHeader() {
           {monthDate}
         </p>
       </div>
-      <div className="grid w-full h-12 grid-cols-7">
+      <div className="w-full h-12 grid grid-cols-7 gap-x-1">
         {
           weeksDayOfMonth.map(({ date, dd, dayOfTheWeek }) => {
             return (
               <button
                 key={dd}
                 className={cn(
-                  "mx-1 py-1 h-full flex flex-col items-center duration-300 transition",
+                  "py-1 h-full flex flex-col items-center duration-300 transition",
                   toDate(activateDate) === dd && "bg-gray-100 rounded-md",
                 )}
                 onClick={() => {
@@ -76,6 +78,9 @@ export function TodoHeader() {
             )
           })
         }
+      </div>
+      <div className="mt-6">
+        <TodoFilter />
       </div>
     </div>
   );
