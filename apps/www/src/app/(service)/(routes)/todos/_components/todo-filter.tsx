@@ -38,7 +38,7 @@ export function TodoFilter() {
   }
 
   return (
-    <div className="px-2 flex justify-end">
+    <div className="flex justify-end">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

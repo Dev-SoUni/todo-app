@@ -25,7 +25,7 @@ export  const TodoList = () => {
   }, [todos, filter])
 
   return (
-    <div>
+    <div className="h-full">
       {
         filteredTodos.map((todo) => (
           <TodoItem
